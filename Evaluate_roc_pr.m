@@ -18,7 +18,7 @@ nums_frame=[2000,1250,3400,7400,2050,1099,1199,1200,3900,2750];
 successrate_total=zeros(10,1);
 precision_total=zeros(10,1);
 
-%Éè¶¨²»Í¬µÄ¼ì²âÒªÇó
+%è®¾å®šä¸åŒçš„æ£€æµ‹è¦æ±‚
 for iou_threshold = 0.3:0.1:0.7;
     
     for c = 1:21
@@ -32,7 +32,7 @@ for iou_threshold = 0.3:0.1:0.7;
             ours = ours(idx,:);
             gt=load(sprintf('gt_no_static/gt%02d',r));%[frame_id, 0, x, y, w, h]
             gt=gt.gt;
-            result_ours=zeros(size(ours,1),1);%[iou] Ä¬ÈÏÖµÎª[0]
+            result_ours=zeros(size(ours,1),1);%[iou] é»˜è®¤å€¼ä¸º[0]
             result_gt=zeros(size(gt,1),1);%[iou] 
             for i=1:nums_frame(r)
                 idx = find(gt(:,1)==i);
@@ -50,17 +50,17 @@ for iou_threshold = 0.3:0.1:0.7;
                     rec_ours(j,2)=idx(j);
                 end
                 if n_gt~=0&&n_ours~=0
-                    %¼ÆËãÏà¹Ø¾ØÕór
+                    %è®¡ç®—ç›¸å…³çŸ©é˜µr
                     r_matrix = relation_compute(rec_ours,rec_gt);
-                    %KMËã·¨ÒªÇóÊäÈëµÄÏà¹Ø¾ØÕóµÄÎ¬¶È[m,n]Âú×ã m<=n
+                    %KMç®—æ³•è¦æ±‚è¾“å…¥çš„ç›¸å…³çŸ©é˜µçš„ç»´åº¦[m,n]æ»¡è¶³ m<=n
                     transpose = false;
                     if n_gt<n_ours
                         transpose =true;
                         r_matrix=r_matrix';
                     end
-                    %Ê¹ÓÃKMËã·¨ÇóÆ¥Åä
+                    %ä½¿ç”¨KMç®—æ³•æ±‚åŒ¹é…
                     match = KM(r_matrix);
-                    %¸ù¾İÆ¥Åä½á¹û match ºÍÏà¹Ø¾ØÕó r_matrix ¸øresult_gt ºÍ result_ours ¸³Öµ
+                    %æ ¹æ®åŒ¹é…ç»“æœ match å’Œç›¸å…³çŸ©é˜µ r_matrix ç»™result_gt å’Œ result_ours èµ‹å€¼
                     if transpose
                         r_matrix = r_matrix';
                     end
